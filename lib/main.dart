@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
-
-import 'package:zappchat_ui/Screens/mobileScreenLayout.dart';
-
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:zappchat_ui/Screens/Registration_screen.dart';
 import 'constants.dart';
+import 'credentials.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Supabase.initialize(
+    url: supa_url,
+    anonKey: supa_api,
+  );
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'ZappChat UI',
-        theme:
-            ThemeData.dark().copyWith(scaffoldBackgroundColor: backgroundColor),
-        home: mobileScreenLayout()
-        );
+      title: 'ZappChat UI',
+      theme:
+          ThemeData.dark().copyWith(scaffoldBackgroundColor: backgroundColor),
+      home: registrationScreen(),
+    );
   }
 }

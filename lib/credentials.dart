@@ -1,0 +1,2 @@
+const supa_url = 'https://hjjiwjxoqpqomumqypqb.supabase.co';
+const supa_api = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhqaml3anhvcXBxb211bXF5cHFiIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODc4NTMyNDQsImV4cCI6MjAwMzQyOTI0NH0.WhCMgwe2CMRbRTBLHFeWSEhcKJlgt1XjLhlQCGYsTcM';

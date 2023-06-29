@@ -1,32 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:zappchat_ui/Screens/Sign_out_screen.dart';
 import 'package:zappchat_ui/constants.dart';
 import 'package:zappchat_ui/widgets/contacts_list.dart';
+import 'package:zappchat_ui/services/Database_services.dart';
 
 class mobileScreenLayout extends StatelessWidget {
-  const mobileScreenLayout({super.key});
-
+  mobileScreenLayout({super.key});
+  final k = DataBase_service().client.auth.currentUser!.userMetadata;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 3,
+        length: 1,
         child: Scaffold(
           appBar: AppBar(
             elevation: 0,
             backgroundColor: appBarColor,
-            title: const Text(
-              'ZappChat',
-              style: TextStyle(color: Colors.grey, fontSize: 20),
+            title: Text(
+              k != null ? '${k?['name']}' : 'ZappChat',
+              style: const TextStyle(color: Colors.grey, fontSize: 20),
             ),
             actions: [
               IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.search,
-                  color: Colors.grey,
-                ),
-              ),
-              IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const signOut()));
+                },
                 icon: const Icon(
                   Icons.more_vert,
                   color: Colors.grey,
@@ -41,19 +39,9 @@ class mobileScreenLayout extends StatelessWidget {
                 indicatorColor: tabColor,
                 tabs: [
                   Tab(text: 'CHATS'),
-                  Tab(text: 'STATUS'),
-                  Tab(text: 'CALLS'),
                 ]),
           ),
-          body: ContactsLists(),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {},
-            backgroundColor: tabColor,
-            child: const Icon(
-              Icons.message,
-              color: Colors.white,
-            ),
-          ),
+          body: const ContactsLists(),
         ));
   }
 }

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-
+import 'package:zappchat_ui/Modal/Message.dart';
+import 'package:zappchat_ui/widgets/mark_as_read.dart';
 import '../constants.dart';
 
 class SenderMessageCard extends StatelessWidget {
-  final String Message;
+  final Message message;
   final String date;
-  const SenderMessageCard({super.key, required this.Message, required this.date});
-
+  const SenderMessageCard(
+      {super.key, required this.message, required this.date});
   @override
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.centerLeft,
       child: ConstrainedBox(
-        constraints:
-        BoxConstraints(maxWidth: MediaQuery.of(context).size.width - 45),
+        constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width - 45, minWidth: 100),
         child: Card(
           elevation: 1,
           shape: RoundedRectangleBorder(
@@ -27,24 +28,26 @@ class SenderMessageCard extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     left: 10, right: 30, top: 5, bottom: 20),
                 child: Text(
-                  Message,
+                  message.content,
                   style: const TextStyle(
                     fontSize: 16,
-
                   ),
                 ),
               ),
               Positioned(
-                bottom: 2,
+                bottom: 4,
                 right: 10,
                 child: Row(
                   children: [
                     Text(
                       date,
-                      style: const TextStyle(fontSize: 13, color: Colors.white),
+                      style:
+                          const TextStyle(fontSize: 13, color: Colors.white70),
                     ),
-                    const SizedBox(width: 5,),
-                    const Icon(Icons.done_all,size: 20,color: Colors.blue,)
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    MarkAsRead(message: message)
                   ],
                 ),
               )

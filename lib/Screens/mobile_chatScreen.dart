@@ -1,81 +1,67 @@
 import 'package:flutter/material.dart';
-import 'package:zappchat_ui/info.dart';
+import 'package:zappchat_ui/Screens/VoiceCallScreen.dart';
 import 'package:zappchat_ui/constants.dart';
 import 'package:zappchat_ui/widgets/chat_list.dart';
+import 'package:zappchat_ui/services/Database_services.dart';
 
 class mobileChatScreen extends StatelessWidget {
-  const mobileChatScreen({super.key});
+  final String name;
+  final String userTo;
+  mobileChatScreen({super.key, required this.name, required this.userTo});
+
+  final TextEditingController scon = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: appBarColor,
-        title: Text(info[0]['name'].toString()),
+        title: Text(name),
         actions: [
           IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.video_call),
-          ),
-          IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => VoiceCallScreen(name : name, user_to: userTo,)));
+            },
             icon: const Icon(Icons.call),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.more_vert),
           ),
         ],
       ),
       body: Column(
         children: [
           //ChatList
-          const Expanded(child: ChatList()),
-          TextField(
-            decoration: InputDecoration(
-              fillColor: mobileChatBoxColor,
-              filled: true,
-              prefixIcon: IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.emoji_emotions_outlined,
-                  color: Colors.grey,
-                ),
-              ),
-              suffixIcon: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    onPressed: () {},
+          Expanded(child: ChatList(userTo: userTo)),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: TextField(
+              controller: scon,
+              decoration: InputDecoration(
+                  suffixIcon: IconButton(
                     icon: const Icon(
-                      Icons.camera_alt,
-                      color: Colors.grey,
+                      Icons.send,
+                      color: Colors.white,
                     ),
+                    onPressed: () async {
+                      if (scon.text.isNotEmpty) {
+                        await DataBase_service()
+                            .saveMessage(content: scon.text, userTo: userTo);
+                        scon.clear();
+                      }
+                    },
                   ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.attach_file_outlined,
-                      color: Colors.grey,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.money,
-                      color: Colors.grey,
-                    ),
-                  ),
-                ],
-              ),
-              hintText: 'Type a Message',
-              border: OutlineInputBorder(
-
-
-                borderRadius: BorderRadius.circular(10),
-              ),
+                  hintText: 'Type Your Message',
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                      borderSide: const BorderSide(color: Colors.white)),
+                  fillColor: mobileChatBoxColor,
+                  filled: true),
             ),
           ),
+          const SizedBox(
+            height: 10,
+          )
         ],
       ),
     );
